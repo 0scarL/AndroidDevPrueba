@@ -2,4 +2,8 @@
     <string name="app_name">AndroidDevloper</string>
 
     <string name="hello_blank_fragment">Post Fragment</string>
+    <string name="fondo_card_view">fondo_card_view</string>
+    <string name="post_title">post_title</string>
+    <string name="body_message">body_message</string>
+    <string name="message_id">77</string>
 </resources>
