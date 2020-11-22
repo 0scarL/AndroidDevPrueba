@@ -12,7 +12,7 @@
         android:layout_height="80dp"
         app:tabTextColor="#ffffff"
         app:tabSelectedTextColor="@color/colorMoneda"
-        android:background="@color/colorPrimary"
+        android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
