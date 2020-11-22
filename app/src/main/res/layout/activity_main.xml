@@ -10,10 +10,10 @@
         android:id="@+id/myTabLayout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        app:tabTextColor="#ffffff"
+        app:tabTextColor="@color/white"
+        app:tabIndicatorColor="@color/colorMoneda"
         app:tabSelectedTextColor="@color/colorMoneda"
         android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,8 +24,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/fondo_blancorayas"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/myTabLayout"
+        app:layout_constraintTop_toBottomOf="@id/myTabLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/butonClear"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="@string/erase_all"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
