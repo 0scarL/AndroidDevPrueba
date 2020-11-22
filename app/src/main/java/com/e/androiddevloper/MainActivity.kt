@@ -3,6 +3,7 @@ package com.e.androiddevloper
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.e.androiddevloper.Adapters.TabsAdapter
 import com.e.androiddevloper.Model.PostDbClient
 import com.e.androiddevloper.Model.apis.PostDbService
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,7 +18,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         testDataFromPost()
+        setTabs()
 
+    }
+
+    fun setTabs(){
+        /**Luego de crear el TabAdapter, ahora lo seteo**/
+        myViewPager.adapter = TabsAdapter(supportFragmentManager)
+        /**configuro el viewPager y tabs**/
+        myTabLayout.setupWithViewPager(this.myViewPager)
     }
 
     fun testDataFromPost() {
@@ -31,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(it, "se cargaron los datos ", Toast.LENGTH_SHORT).show()
                     val llamado = call.body().toString()
                     Toast.makeText(it, "" + llamado, Toast.LENGTH_SHORT).show()
-                    textView.text = call.body().toString()
+
                 }
 
             }

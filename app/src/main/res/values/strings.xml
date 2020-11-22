@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AndroidDevloper</string>
+
+    <string name="hello_blank_fragment">Post Fragment</string>
 </resources>
