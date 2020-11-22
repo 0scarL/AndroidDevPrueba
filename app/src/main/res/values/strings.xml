@@ -7,4 +7,5 @@
     <string name="body_message">body_message</string>
     <string name="message_id">77</string>
     <string name="message_userid">idus</string>
+    <string name="erase_all">Clear All</string>
 </resources>
