@@ -38,13 +38,16 @@ class MainActivity : AppCompatActivity() {
             uiThread {
                 if (call.isSuccessful) {
                     Toast.makeText(it, "se cargaron los datos ", Toast.LENGTH_SHORT).show()
-                    val llamado = call.body().toString()
-                    Toast.makeText(it, "" + llamado, Toast.LENGTH_SHORT).show()
+
+                    /**aca tenemos el listado de Post**/
+                    val listaPost = call.body() ?: listOf()
+                    Toast.makeText(it, "" + listaPost, Toast.LENGTH_SHORT).show()
 
                 }
 
             }
         }
+
     }
 
 }
