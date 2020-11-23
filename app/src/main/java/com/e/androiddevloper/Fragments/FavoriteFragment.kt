@@ -30,6 +30,7 @@ class FavoriteFragment : Fragment(), PostListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         favoriteAdapter = FavoriteAdapter(ListFavorite.listaFavorite, this)
         view.myFavRecyclerView.adapter = favoriteAdapter
         view.myFavRecyclerView.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)

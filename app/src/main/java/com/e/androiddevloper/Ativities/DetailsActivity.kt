@@ -12,6 +12,7 @@ class DetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_details)
 
         renderDetails()
+        setTitle("Post Details")
 
     }
 
