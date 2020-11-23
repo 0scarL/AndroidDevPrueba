@@ -6,16 +6,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.e.androiddevloper.Adapters.PostAdapter
 import com.e.androiddevloper.Interface.PostListener
+import com.e.androiddevloper.MainActivity
 import com.e.androiddevloper.Model.PostDbClient
 import com.e.androiddevloper.Model.apis.PostDbService
 import com.e.androiddevloper.Model.response.PostDbResult
+import com.e.androiddevloper.Objects.ListFavorite
 import com.e.androiddevloper.Objects.ListaPost
 import com.e.androiddevloper.Objects.ListaPost.listaPost
 import com.e.androiddevloper.R
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_post.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -29,6 +34,7 @@ class PostFragment : Fragment(), PostListener {
 
 
     override fun onCreateView(
+
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
@@ -39,17 +45,50 @@ class PostFragment : Fragment(), PostListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        context?.let { setPostAdapter(it) }
-        getFromPost()
+        start()
+        clearAll()
+        startAdapterBringContext()
+
+
 
         imageView_buscar.setOnClickListener {
-            busqueda = editText_buscar.text.toString().toLowerCase()
+            busqueda = editText_buscar.text.toString().toLowerCase(Locale.ROOT)
             filtrar(busqueda, postAdapter)
             /**para renderizar esta nueva lista, que es la filtrada entonces uso el mismo adaptador de Productos**/
 
         }
 
     }
+
+    fun start(){activity?.butonLoad?.setOnClickListener{
+        onEfect()
+        /**loading data**/
+        getFromPost()}
+    }
+
+    fun clearAll(){
+        activity?.butonClear?.setOnClickListener {
+            onEfect()
+            Toast.makeText(context, "Cleaning All", Toast.LENGTH_SHORT).show()
+            listaPost.clear()
+            ListFavorite.listaFavorite.clear()
+            postAdapter.notifyDataSetChanged()
+            offEfect()
+        }
+    }
+
+    fun startAdapterBringContext(){
+        context?.let { setPostAdapter(it) }
+    }
+
+    fun onEfect(){
+        activity?.progress?.visibility = View.VISIBLE
+
+    }
+    fun offEfect(){
+        activity?.progress?.visibility = View.INVISIBLE
+    }
+
 
     fun setPostAdapter(context : Context){
         postAdapter = PostAdapter(context  ,listOf(),this )
@@ -66,15 +105,16 @@ class PostFragment : Fragment(), PostListener {
                     .execute()
             uiThread {
                 if (call.isSuccessful) {
-
                     /**aca tenemos el listado de Post**/
+                    offEfect()
                     val listaHotPost = call.body() ?: listOf()
-                    ListaPost.listaPost = listaHotPost as MutableList<PostDbResult>
+                    listaPost = listaHotPost as MutableList<PostDbResult>
                     //Toast.makeText(context, "data "+ listaPost , Toast.LENGTH_SHORT).show()
                     postAdapter.listaPost = listaPost
                     postAdapter.notifyDataSetChanged()
 
                 }
+
 
             }
         }
@@ -93,10 +133,8 @@ class PostFragment : Fragment(), PostListener {
 
 fun filtrar(busqueda: String, postAdapter: PostAdapter) {
     val listaFiltrada : MutableList<PostDbResult> = mutableListOf()
-    for(item in ListaPost.listaPost){
-        if(item.title.toLowerCase(Locale.ROOT).contains(busqueda)){
-            listaFiltrada.add(item)
-        }
+    for(item in listaPost) if(item.title.toLowerCase(Locale.ROOT).contains(busqueda)){
+        listaFiltrada.add(item)
     }
     postAdapter.listaPost = listaFiltrada
     postAdapter.notifyDataSetChanged()
