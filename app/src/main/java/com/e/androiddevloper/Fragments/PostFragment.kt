@@ -28,7 +28,7 @@ import java.util.*
 
 
 class PostFragment : Fragment(), PostListener {
-    lateinit private var postAdapter: PostAdapter
+    var postAdapter: PostAdapter? = null
     val TAB_DETAILS = 1
     var busqueda : String =""
 
@@ -44,12 +44,9 @@ class PostFragment : Fragment(), PostListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        startAdapterBringContext()
         start()
         clearAll()
-        startAdapterBringContext()
-
-
 
         imageView_buscar.setOnClickListener {
             busqueda = editText_buscar.text.toString().toLowerCase(Locale.ROOT)
@@ -59,6 +56,32 @@ class PostFragment : Fragment(), PostListener {
         }
 
     }
+
+    /**Peticion de servicio y datos fuera del hilo principal de la App**/
+    fun getFromPost() {
+
+        /**tarea asincrona**/
+        doAsync {
+            val call = PostDbClient.service()
+                .create(PostDbService::class.java)
+                .getPost()
+                .execute()
+            uiThread {
+                if (call.isSuccessful) {
+                    /**aca tenemos el listado de Post**/
+                    offEfect()
+                    val listaHotPost = call.body() ?: listOf()
+                    listaPost = listaHotPost as MutableList<PostDbResult>
+                    //Toast.makeText(context, "data "+ listaPost , Toast.LENGTH_SHORT).show()
+                    postAdapter?.listaPost = listaPost
+                    postAdapter?.notifyDataSetChanged()
+
+                }
+            }
+        }
+
+    }
+
 
     fun start(){activity?.butonLoad?.setOnClickListener{
         onEfect()
@@ -72,7 +95,7 @@ class PostFragment : Fragment(), PostListener {
             Toast.makeText(context, "Cleaning All", Toast.LENGTH_SHORT).show()
             listaPost.clear()
             ListFavorite.listaFavorite.clear()
-            postAdapter.notifyDataSetChanged()
+            postAdapter?.notifyDataSetChanged()
             offEfect()
         }
     }
@@ -96,33 +119,16 @@ class PostFragment : Fragment(), PostListener {
         myRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
-    /**Peticion de servicio y datos fuera del hilo principal de la App**/
-    fun getFromPost() {
-        doAsync {
-            val call = PostDbClient.service()
-                    .create(PostDbService::class.java)
-                    .getPost()
-                    .execute()
-            uiThread {
-                if (call.isSuccessful) {
-                    /**aca tenemos el listado de Post**/
-                    offEfect()
-                    val listaHotPost = call.body() ?: listOf()
-                    listaPost = listaHotPost as MutableList<PostDbResult>
-                    //Toast.makeText(context, "data "+ listaPost , Toast.LENGTH_SHORT).show()
-                    postAdapter.listaPost = listaPost
-                    postAdapter.notifyDataSetChanged()
-
-                }
-
-
-            }
-        }
-
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        reloadPostView()
     }
 
     override fun reloadPostView() {
-        /**no requerido en esta clase**/
+
+        postAdapter?.listaPost = ListaPost.listaPost
+        postAdapter?.notifyDataSetChanged()
+
     }
 
     override fun goToOtherFragment() {
@@ -131,13 +137,13 @@ class PostFragment : Fragment(), PostListener {
 
 }
 
-fun filtrar(busqueda: String, postAdapter: PostAdapter) {
+fun filtrar(busqueda: String, postAdapter: PostAdapter?) {
     val listaFiltrada : MutableList<PostDbResult> = mutableListOf()
     for(item in listaPost) if(item.title.toLowerCase(Locale.ROOT).contains(busqueda)){
         listaFiltrada.add(item)
     }
-    postAdapter.listaPost = listaFiltrada
-    postAdapter.notifyDataSetChanged()
+    postAdapter?.listaPost = listaFiltrada
+    postAdapter?.notifyDataSetChanged()
 }
 
 

@@ -16,7 +16,12 @@ import kotlinx.android.synthetic.main.layout_item_post.view.*
 
 class PostViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView) {
 
+    lateinit var post: PostDbResult
+    lateinit var listener: PostListener
+
     fun bin(post: PostDbResult, listener: PostListener, context: Context){
+        this.post = post
+        this.listener = listener
         itemView.layout_item_post_title.text = post.title
         itemView.layot_item_body.text = post.body
         itemView.layot_item_post_id.text = "Id: " + post.id.toString()
@@ -33,15 +38,23 @@ class PostViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView) {
         builder.setPositiveButton("Add to Favorite"){dialogInterface, i ->
             ListFavorite.addFavorite(post)
         }
-        builder.setNegativeButton("Remove"){dialogInterface, i ->
+        builder.setNeutralButton("Remove "){dialogInterface, i ->
             ListaPost.removePost(post)
-
-
+            listener.reloadPostView()
             Log.d("lista", ListFavorite.listaFavorite.toString())
         }
+
+
         builder.create()
         builder.show()
         return true
+    }
+
+    fun removeOne(listener: PostListener, post: PostDbResult) {
+        ListaPost.removePost(post)
+        listener.reloadPostView()
+
+
     }
     private fun showDetails(itemView: View, post: PostDbResult, listener: PostListener, context: Context): Boolean{
 

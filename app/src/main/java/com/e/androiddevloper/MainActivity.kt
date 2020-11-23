@@ -2,6 +2,7 @@ package com.e.androiddevloper
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.e.androiddevloper.Adapters.TabsAdapter
 import com.e.androiddevloper.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -12,6 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setTabs()
+        Toast.makeText(this, "Wellcome please Load Post", Toast.LENGTH_LONG).show()
 
     }
 
