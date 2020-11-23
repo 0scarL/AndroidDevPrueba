@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.e.androiddevloper.Adapters.TabsAdapter
+import com.e.androiddevloper.Extention.myToast
 import com.e.androiddevloper.Model.PostDbClient
 import com.e.androiddevloper.Model.apis.PostDbService
 import kotlinx.android.synthetic.main.activity_main.*

@@ -13,10 +13,13 @@ object ListFavorite {
         if (listaFavorite.contains(post)) return
         else {
             listaFavorite.add(post)
+
+
         }
     }
     fun removeFavorite(post: PostDbResult){
         listaFavorite.remove(post)
+
    }
 }
 

@@ -21,11 +21,13 @@ class PostViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView) {
         itemView.layot_item_body.setOnLongClickListener { itemView -> showAlert(itemView, post) }
     }
 
-    fun showAlert(itemView: View, post: PostDbResult):Boolean{
+    private fun showAlert(itemView: View, post: PostDbResult):Boolean{
+
         val builder = AlertDialog.Builder(itemView.context)
         builder.setTitle("Options")
         builder.setPositiveButton("Add to Favorite"){dialogInterface, i ->
             ListFavorite.addFavorite(post)
+
             Log.d("lista",ListFavorite.listaFavorite.toString())
         }
         builder.setNegativeButton("Cancel", { _, _ ->  })
