@@ -5,7 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.e.androiddevloper.Interface.PostListener
-import com.e.androiddevloper.Model.ListFavorite
+import com.e.androiddevloper.Objects.ListFavorite
 import com.e.androiddevloper.Model.response.PostDbResult
 import kotlinx.android.synthetic.main.layout_item_details.view.*
 

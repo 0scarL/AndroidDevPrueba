@@ -6,15 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.ViewPager
 import com.e.androiddevloper.Adapters.FavoriteAdapter
 import com.e.androiddevloper.Interface.PostListener
-import com.e.androiddevloper.Model.ListFavorite
+import com.e.androiddevloper.Objects.ListFavorite
 import com.e.androiddevloper.R
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_favorite.view.*
 
 
 class FavoriteFragment : Fragment(), PostListener {
     var favoriteAdapter : FavoriteAdapter? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,5 +45,9 @@ class FavoriteFragment : Fragment(), PostListener {
     override fun reloadPostView() {
         favoriteAdapter?.listaFavorite = ListFavorite.listaFavorite
         favoriteAdapter?.notifyDataSetChanged()
+    }
+
+    override fun goToOtherFragment() {
+        activity?.myViewPager?.setCurrentItem(1)
     }
 }

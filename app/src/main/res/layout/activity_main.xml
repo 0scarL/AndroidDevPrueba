@@ -31,13 +31,26 @@
 
     <Button
         android:id="@+id/butonClear"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
         android:text="@string/erase_all"
+        android:layout_marginStart="2dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/myViewPager"
+        app:layout_constraintStart_toEndOf="@id/butonLoad"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/butonLoad"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:text="@string/load_data"
+        android:layout_marginEnd="2dp"
         android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/myViewPager"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@id/butonClear"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

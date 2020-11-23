@@ -1,7 +1,5 @@
-package com.e.androiddevloper.Model
+package com.e.androiddevloper.Objects
 
-import android.widget.Toast
-import com.e.androiddevloper.MainActivity
 import com.e.androiddevloper.Model.response.PostDbResult
 
 object ListFavorite {
