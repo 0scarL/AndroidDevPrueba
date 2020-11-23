@@ -5,17 +5,18 @@ package com.e.androiddevloper.Adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.e.androiddevloper.Fragments.DetailsFragment
 import com.e.androiddevloper.Fragments.FavoriteFragment
 import com.e.androiddevloper.Fragments.PostFragment
 
 class TabsAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
-    val NUMERO_TABS = 3
+    val NUMERO_TABS = 2
+    val TAB_POST = 0
+    val TAB_FAVORITE = 1
+
 
     override fun getItem(position: Int): Fragment {
         when(position){
-            0 -> return PostFragment()
-            1 -> return DetailsFragment()
+            TAB_POST -> return PostFragment()
             else -> return FavoriteFragment()
         }
     }
@@ -26,8 +27,7 @@ class TabsAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
 
     override fun getPageTitle(position: Int): CharSequence? {
         when(position){
-            0 -> return "Post"
-            1-> return "Details Information"
+            TAB_POST -> return "Post"
             else -> return "Favorite Post"}
     }
 }
