@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        testDataFromPost()
         setTabs()
 
     }
@@ -28,26 +27,4 @@ class MainActivity : AppCompatActivity() {
         /**configuro el viewPager y tabs**/
         myTabLayout.setupWithViewPager(this.myViewPager)
     }
-
-    fun testDataFromPost() {
-        doAsync {
-            val call = PostDbClient.service()
-                    .create(PostDbService::class.java)
-                    .getPost()
-                    .execute()
-            uiThread {
-                if (call.isSuccessful) {
-                    Toast.makeText(it, "se cargaron los datos ", Toast.LENGTH_SHORT).show()
-
-                    /**aca tenemos el listado de Post**/
-                    val listaPost = call.body() ?: listOf()
-                    Toast.makeText(it, "" + listaPost, Toast.LENGTH_SHORT).show()
-
-                }
-
-            }
-        }
-
-    }
-
 }
